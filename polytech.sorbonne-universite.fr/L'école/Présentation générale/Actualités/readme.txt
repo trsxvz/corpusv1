@@ -1,0 +1,1 @@
+Ces actualités ne sont pas publiées très régulièrement et n'ont un intérêt que modéré pour notre RAG. Puisque leur conversion et traitement au format JSONL est assez chronophage, cela sera fait ultérieurement.
