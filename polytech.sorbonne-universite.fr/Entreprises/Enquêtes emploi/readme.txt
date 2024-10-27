@@ -1,1 +1,0 @@
-sera traité dans un second temps car l'information est dure à extraire du pdf graphique

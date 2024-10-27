@@ -2,37 +2,27 @@ import requests
 from bs4 import BeautifulSoup
 import json
 
-# Demander à l'utilisateur de saisir l'URL et le nom du fichier .jsonl
 url = input("Entrez l'URL de la page à scraper : ")
 filename = input("Entrez le nom du fichier JSONL à générer : ")
-
-# Ajouter automatiquement l'extension ".jsonl" si elle n'est pas présente
 if not filename.endswith(".jsonl"):
     filename += ".jsonl"
 
-# Envoyer une requête pour obtenir le contenu de la page
 response = requests.get(url)
 
-# S'assurer que la requête a réussi
 if response.status_code == 200:
-    # Parser le HTML avec BeautifulSoup
     soup = BeautifulSoup(response.text, 'html.parser')
 
-    # Trouver les sections pertinentes du contenu (à ajuster selon la structure HTML)
-    sections = soup.find_all(['h2', 'p'])  # Par exemple, capturer les titres <h2> et les paragraphes <p>
+    sections = soup.find_all(['h2', 'p'])  # <h2> et les paragraphes <p>
 
-    # Initialiser la liste pour stocker les données
     data = []
-    # Variables pour stocker le titre courant et les paragraphes associés
     current_title = ""
     content = ""
 
-    # Parcourir les sections et organiser le contenu
+    # Parcourir le tout
     for section in sections:
-        if section.name == 'h2':  # Si c'est un titre de section (h2)
-            # Si nous avons du contenu accumulé, enregistrons la section précédente
+        if section.name == 'h2': 
             if current_title and content:
-                # Ne pas ajouter l'élément si le titre est "Menu en bas"
+                # on évite le menu sans container
                 if current_title.strip() != "Menu en bas":
                     data.append({
                         "title": current_title.strip(),
@@ -45,17 +35,13 @@ if response.status_code == 200:
                         "filierespecifique": "NA",
                         "datespecifique": "NA"
                     })
-                content = ""  # Réinitialiser le contenu pour la prochaine section
+                content = "" 
 
-            # Mettre à jour le titre de la section
             current_title = section.get_text()
-        elif section.name == 'p':  # Si c'est un paragraphe
-            # Ajouter le texte au contenu
+        elif section.name == 'p': 
             content += section.get_text() + "\n"
 
-    # Ajouter la dernière section après la boucle
     if current_title and content:
-        # Ne pas ajouter l'élément si le titre est "Menu en bas"
         if current_title.strip() != "Menu en bas":
             data.append({
                 "title": current_title.strip(),
