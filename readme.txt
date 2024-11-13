@@ -1,15 +1,15 @@
 Répertoires :
 - 'intranet' correspond aux documents internes publics auprès des élèves (règlement des études, maquettes pédagogiques à jour, etc)
 - 'polytech.sorbonne-universite.fr' correspond au site web de Polytech sorbonne. l'agencement du répertoire suit la structure web du site pour que l'on s'y retrouve mieux.
-- 'les_json_en_vrac' correspond à l'ensemble des json regroupés dans un seul et même dossier si l'on veut se passer de l'arborescence
-d'autres répertoires seront éventuellement ajoutés dans le futur (site Polytech global, site S-U,...)
+- 'les_json_parfaits_en_vrac' correspond à l'ensemble des json regroupés dans un seul et même dossier si l'on veut se passer de l'arborescence. Ils ont été fait manuellement de la manière la plus claire et préférable. On souhaiterait donc que le script de scrapt puisse régénérer la même chose automatiquement, ce qui ne sera bien sûr pas possible à 100% pour les raisons évoquées dans le fichier "problemes_scrap.txt"
 
 Structure :
 - La structure des répertoires essaie de s'approcher le plus possible de l'agencement réel du site, mais a parfois dû être modifiée pour éviter les redondances ou pour s'adapter aux différentes structures des pages. Toute l'information textuelle pertinente a néanmoins été conservée.
 
 Fichiers :
 - 'readme.txt' est le présent fichier explicatif
-- 'script-extraction-v1.py' est un script python utilisant la librairie beautifulsoup pour extraire les infos d'une page web. Il est pratique mais il faut tout de même gérer certaines choses manuellement, comme par exemple les metadata, la bonne répartition du texte, les url à extraire des hyperliens,...)
+- 'problemes_scrap.txt' explique les problèmes à surmonter pour réaliser un script de scrapping efficace
+- 'script_scrap.py' est le script de scrap en cours de réalisation
 
 Courte explication de la manière dont on a stocké les données :
 
@@ -17,6 +17,7 @@ On a opté pour un format .json (JavaScript Object Notation).
 L'avantage par rapport au .txt est la possibilité d'agencer le texte et d'attribuer des metadonnées.
 L'avantage par rapport au .csv est la capacité à traiter correctement des textes relativement longs.
 L'avantage par rapport au .pdf est une bien meilleure structuration (les pdf sont structurés graphiquement plutot que logiquement)
+L'avantage par rapport au .jsonl est de pouvoir mieux charger les documents avec langchain (via le JSON Loader).
 
 Choix des metadata :
 
@@ -26,8 +27,8 @@ Certaines metadonnées se révèlent peu utiles dans notre contextes :
 
 Les metadata les plus importantes sont en réalité celles de structuration :
 - datespecifique correspond à une temporalité auquel le document fait référence (et non pas est publié) et prend "NA" sinon.
-   par exemple, le règlement des études 2024-2025 prendrait la valeur "2024_2025" puisqu'il concerne surtout ces années.
-- category1 correspond à la source de la page (site polytech, intranet, site s-u...)
+   par exemple, "datespecifique" d'un article concernant un tournoi de 2023 prendrait la valeur "2023" puisqu'il concerne surtout cette année.
+- category1 correspond à la source de la page (site Polytech global, site Polytech sorbonne, intranet, site s-u...)
 - category2 correspond à la première grande catégorie sur le site même
 - category3 correspond à la première sous-catégorie sur le site
 - category4 correspond à la deuxième sous-catégorie sur le site
