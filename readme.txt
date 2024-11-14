@@ -9,7 +9,9 @@ Structure :
 Fichiers :
 - 'readme.txt' est le présent fichier explicatif
 - 'problemes_scrap.txt' explique les problèmes à surmonter pour réaliser un script de scrapping efficace
-- 'script_scrap.py' est le script de scrap en cours de réalisation
+- 'script_scrap.py': Le script principal pour l'extraction de contenu.
+- 'requirements.txt': Contient les dépendances Python nécessaires, installables via pip install -r requirements.txt.
+- 'scrape.log': Le fichier de log généré lors de chaque exécution du script, contenant les informations sur les pages scrappées et les erre
 
 Courte explication de la manière dont on a stocké les données :
 
@@ -34,3 +36,12 @@ Les metadata les plus importantes sont en réalité celles de structuration :
 - category4 correspond à la deuxième sous-catégorie sur le site
 Parfois, l'imbrication n'est pas si profonde, et dans ce cas les category non-atteintes prennent la valeur "NA".
 - filierespecifique (exemple : "MAIN") indique si le document concerne une/des filière(s) en particulier, et prend "NA" sinon.
+
+Fonctionnement du Script:
+
+- Le script 'script_scrap.py' extrait automatiquement le contenu textuel principal à l'aide de la librairie readability pour obtenir une version épurée des pages.
+Un fichier 'scrape.log' est généré à chaque exécution, consignant les URL traitées, les éventuelles erreurs, et le statut de chaque extraction. Ce log est également affiché dans le terminal.
+Gestion des PDFs:
+- Les liens vers les fichiers PDF identifiés sur le site sont détectés mais non traités actuellement (commenté comme # TODO: Handle PDFs).
+Exécution:
+- Pour utiliser le script, exécutez `python script_scrap.py`. Le répertoire scraped_data est créé pour stocker les données JSON extraites.
